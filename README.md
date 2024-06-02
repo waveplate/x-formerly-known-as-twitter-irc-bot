@@ -1,3 +1,5 @@
+### > *note: this is an updated version of this repo that bypasses the API, allowing it to read tweets for free, see `old-twitter-irc-bot` for the old bot written in typescript*
+
 # twitter-irc-bot (0.1.0)
 this is an irc bot that previews tweets whenever a link to a tweet is posted in a channel
 
