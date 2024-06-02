@@ -1,0 +1,13 @@
+version: "3.3"
+
+services:
+  twitbot:
+    build: ./docker
+    volumes:
+      - type: bind
+        source: ./config.json
+        target: /root/config.json
+      - type: bind
+        source: ./bot.py
+        target: /root/bot.py
+    restart: always

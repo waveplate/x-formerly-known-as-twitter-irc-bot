@@ -1,0 +1,40 @@
+{
+    "twitter": {
+        "username": "",
+        "email": "",
+        "password": ""
+    },
+    "irc": {
+        "gecos": "twitbot",
+        "username": "twitbot",
+        "host": "irc.efnet.org",
+        "port": 6697,
+        "use_ssl": true,
+        "nick": "twitbot",
+        "channels": [
+            "#some-chan",
+            "#other-chan"
+        ]
+    },
+    "bot": {
+        "twitPic": true,
+        "wrapLen": 60,
+        "maxTweetLength": 400,
+        "ansi": {
+            "width": 10,
+            "contrast": 30
+        },
+        "colors": {
+            "name": "",
+            "user": "",
+            "date": "14",
+            "text": "",
+            "retweets": "09",
+            "likes": "04"
+        },
+        "symbols": {
+            "retweets": "♻️",
+            "likes": "❤️"
+        }
+    }
+}
