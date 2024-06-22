@@ -115,7 +115,7 @@ def send_multiline_message(connection, target, message):
         connection.privmsg(target, line)
 
 def draw_tweet(tweet, event, connection):
-    tweet_text = tweet.text if len(tweet.text) <= config['bot']['maxTweetLength'] else tweet.text[:config['bot']['maxTweetLength']] + "..."
+    tweet_text = tweet.full_text if len(tweet.full_text) <= config['bot']['maxTweetLength'] else tweet.full_text[:config['bot']['maxTweetLength']] + "..."
     twit_date = datetime.strptime(tweet.created_at, '%a %b %d %H:%M:%S %z %Y').strftime('%b %d %Y')
     
     stats = f"\x03{config['bot']['colors']['retweets']}{config['bot']['symbols']['retweets']} {tweet.retweet_count}\x03 "
