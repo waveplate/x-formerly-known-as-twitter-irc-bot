@@ -31,9 +31,10 @@ edit `config.json.example`, the `irc` and `twitter` sections are self-explanator
 | command | argument | function |
 | --- | --- | --- |
 | `!image` | `on` or `off`  | toggles whether the profile picture should be displayed |
-| `!width` | default is `10` | the width of the profile picture |
-| `!len` | default is `400` | the maximum number of characters for the tweet, after which it will truncate and add an ellipsis |
-| `!wrap` | default is `60` | the number of characters after which to wrap the text, influences the width of the text box |
+| `!width` | default is `10` | width of the profile picture |
+| `!len` | default is `400` | maximum number of characters for the tweet, after which it will truncate and add an ellipsis |
+| `!wrap` | default is `60` | number of characters after which to wrap the text, influences the width of the text box |
+| `!delay` | default is `0.1` | number of seconds to sleep after sending each line of text (long tweet may trigger flood limits)
 
 # optional configuration
 

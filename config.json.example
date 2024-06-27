@@ -35,6 +35,7 @@
         "symbols": {
             "retweets": "♻️",
             "likes": "❤️"
-        }
+        },
+        "delay": 0.1
     }
 }

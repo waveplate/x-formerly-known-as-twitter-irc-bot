@@ -1,6 +1,7 @@
 import json
 import re
 import ssl
+import time
 import subprocess
 import irc.bot
 import irc.connection
@@ -65,6 +66,10 @@ class TwitterIRCBot(irc.bot.SingleServerIRCBot):
             self.config['bot']['wrapLen'] = int(text)
             connection.privmsg(event.target, f"wrapLen {self.config['bot']['wrapLen']}")
 
+        elif message.startswith('!delay '):
+            self.config['bot']['delay'] = float(text)
+            connection.privmsg(event.target, f"delay {self.config['bot']['delay']}")
+
         elif re.search(r'(twitter|x)\.com/.+?/status/\d+', message):
             tweet_id = re.search(r'(twitter|x)\.com/.+?/status/(\d+)', message).group(2)
             tweet = get_tweet(tweet_id)
@@ -113,6 +118,7 @@ def append_multiline_strings(str1, str2, padding):
 def send_multiline_message(connection, target, message):
     for line in message.split('\n'):
         connection.privmsg(target, line)
+        time.sleep(config['bot']['delay'])
 
 def draw_tweet(tweet, event, connection):
     tweet_text = tweet.full_text if len(tweet.full_text) <= config['bot']['maxTweetLength'] else tweet.full_text[:config['bot']['maxTweetLength']] + "..."
