@@ -1,3 +1,4 @@
+import html
 import json
 import re
 import ssl
@@ -214,6 +215,7 @@ def draw_tweet(tweet, event, connection, send_queue, config):
     try:
         text = getattr(tweet, 'full_text', tweet.text)
         tweet_text = text if len(text) <= config['bot']['maxTweetLength'] else text[:config['bot']['maxTweetLength']] + "..."
+        tweet_text = html.unescape(tweet_text)
 
         twit_date = datetime.strptime(tweet.created_at, '%a %b %d %H:%M:%S %z %Y').strftime('%b %d %Y')
         
