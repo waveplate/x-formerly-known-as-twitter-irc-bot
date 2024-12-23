@@ -29,12 +29,14 @@ to build from source
 
 or use the statically linked x86_64 musl binary (recommended)
 
-
     cd /tmp
     wget https://github.com/waveplate/img2irc/releases/download/v1.1.0/img2irc-1.1.0-linux-x86_64.tar.gz
     sudo tar -xzf img2irc-1.1.0-linux-x86_64.tar.gz -C /usr/local/bin --strip-components=1 img2irc-1.1.0/img2irc
     rm -rf img2irc-1.1.0-linux-x86_64.tar.gz
 
+or if you use arch
+
+    yay -S img2irc-bin
 
 ### 2) install dependencies
 `pip install irc asyncio requests`
@@ -74,7 +76,7 @@ the default settings are
 
 where `width` is the width of the profile picture, and `contrast: 4` increases the contrast by 4%
 
-by default it will use quarterblocks, to use the previous default of halfblocks replace `qb` with `hb` and remove `scale`
+by default it will use quarterblocks, to use the previous default of halfblocks (as seen in the screenshot above) replace `qb` with `hb` and remove `scale`
 
 for flags which do not take any arguments, simply set the value to `true`, e.g.,
 
