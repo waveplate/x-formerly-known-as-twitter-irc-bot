@@ -13,6 +13,6 @@ RUN cd /tmp && \
     tar -xvf img2irc-1.1.0-linux-x86_64.tar.gz && \
     cp /tmp/img2irc-1.1.0/img2irc /usr/local/bin/img2irc
 
-RUN pip install irc twikit asyncio requests
+RUN pip install irc asyncio requests
 
 ENTRYPOINT ["/bin/bash", "/root/entrypoint.sh"]

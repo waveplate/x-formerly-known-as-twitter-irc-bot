@@ -1,15 +1,17 @@
-> [!WARNING]
-> this project uses twikit, as you cannot retrieve tweets using the free tier of the API any longer. **this can get you suspended**, which i found out today
+> [!NOTE]
+> this project has been updated to use rapid api (2000 free requests/month, apparently), as X has started enforcing their rules against non-API automation. if you're among the many who are annoyed by this blatantly anti-developer and anti-consumer policy, tweet at @elonmusk and @lindayacc and shame them
 
-# twitter-irc-bot (0.1.1)
+# x-formerly-known-as-twitter-irc-bot (0.1.1)
 this is an irc bot that previews tweets whenever a link to a tweet is posted in a channel
 
-![twitter-irc-bot](https://i.imgur.com/cI1rIe8.png)
+![x-irc-bot](https://i.imgur.com/cI1rIe8.png)
 
 if you have `img2irc` installed, or use the included docker container, it can optionally show the profile picture of the user
 
 # required configuration
-edit `config.json.example`, the `irc` and `twitter` sections are self-explanatory
+edit `config.json.example`, you will need a rapid api account
+
+then [subscribe to this api (free)](https://rapidapi.com/xtreme-apis-xtreme-apis-default/api/x66)
 
 # quickstart with docker
 `docker-compose up -d`
@@ -19,25 +21,23 @@ edit `config.json.example`, the `irc` and `twitter` sections are self-explanator
 
 to build from source
 
-`git clone https://github.com/waveplate/img2irc`
-
-`cd img2irc && cargo build --release`
-
-`sudo cp target/release/img2irc /usr/local/bin`
+    git clone https://github.com/waveplate/img2irc
+    cd img2irc && cargo build --release
+    sudo cp target/release/img2irc /usr/local/bin
 
 or use the statically linked x86_64 musl binary (recommended)
 
 
-      cd /tmp
-      wget https://github.com/waveplate/img2irc/releases/download/v1.1.0/img2irc-1.1.0-linux-x86_64.tar.gz
-      sudo tar -xzf img2irc-1.1.0-linux-x86_64.tar.gz -C /usr/local/bin --strip-components=1 img2irc-1.1.0/img2irc
-      rm -rf img2irc-1.1.0-linux-x86_64.tar.gz
+    cd /tmp
+    wget https://github.com/waveplate/img2irc/releases/download/v1.1.0/img2irc-1.1.0-linux-x86_64.tar.gz
+    sudo tar -xzf img2irc-1.1.0-linux-x86_64.tar.gz -C /usr/local/bin --strip-components=1 img2irc-1.1.0/img2irc
+    rm -rf img2irc-1.1.0-linux-x86_64.tar.gz
 
 
 ### 2) install dependencies
-`pip install irc twikit asyncio requests`
+`pip install irc asyncio requests`
 
-### 3) start `twitter-irc-bot`
+### 3) start `x-formerly-known-as-twitter-irc-bot`
 `python bot.py`
 
 # commands

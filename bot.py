@@ -6,15 +6,12 @@ import subprocess
 import irc.bot
 import irc.connection
 from datetime import datetime
-from twikit import Client
-
 import asyncio
 import threading
 from queue import Queue
 import signal
 import sys
-
-twitter_client = Client('en-US')
+import requests
 
 with open('config.json', 'r') as f:
     config = json.load(f)
@@ -45,12 +42,7 @@ send_queue = Queue()
 
 async def async_login():
     try:
-        huh = await twitter_client.login(
-            auth_info_1=config['twitter']['username'],
-            auth_info_2=config['twitter']['email'],
-            password=config['twitter']['password']
-        )
-        print("Login successful:", huh)
+        print("Login successful")
         return True
     except Exception as e:
         print("Login failed:", e)
@@ -58,7 +50,25 @@ async def async_login():
 
 async def async_get_tweet(tweet_id):
     try:
-        tweet = await twitter_client.get_tweet_by_id(tweet_id)
+        url = f"https://twitter-api49.p.rapidapi.com/getTweet?tweetId={tweet_id}"
+        headers = {
+            'x-rapidapi-host': 'twitter-api49.p.rapidapi.com',
+            'x-rapidapi-key': config['rapid_api_key']
+        }
+        response = requests.get(url, headers=headers)
+        tweet_json = response.json()
+        tweet = type('Tweet', (), {})()
+        tweet.full_text = tweet_json.get("full_text", "")
+        tweet.text = tweet_json.get("full_text", "")
+        tweet.created_at = tweet_json.get("created_at", "")
+        tweet.retweet_count = tweet_json.get("retweet_count", 0)
+        tweet.favorite_count = tweet_json.get("favorite_count", 0)
+        user_data = tweet_json.get("user", {})
+        user = type('User', (), {})()
+        user.name = user_data.get("name", "")
+        user.screen_name = user_data.get("screen_name", "")
+        user.profile_image_url = user_data.get("profile_image_url_https", "")
+        tweet.user = user
         return tweet
     except Exception as e:
         print(f"Error fetching tweet {tweet_id}: {e}")
@@ -216,42 +226,30 @@ def draw_tweet(tweet, event, connection, send_queue, config):
         text = getattr(tweet, 'full_text', tweet.text)
         tweet_text = text if len(text) <= config['bot']['maxTweetLength'] else text[:config['bot']['maxTweetLength']] + "..."
         tweet_text = html.unescape(tweet_text)
-
         twit_date = datetime.strptime(tweet.created_at, '%a %b %d %H:%M:%S %z %Y').strftime('%b %d %Y')
-        
         stats = f"\x03{config['bot']['colors']['retweets']}{config['bot']['symbols']['retweets']} {tweet.retweet_count}\x03 "
         stats += f"\x03{config['bot']['colors']['likes']}{config['bot']['symbols']['likes']} {tweet.favorite_count}\x03"
-
         header = f"\x03{config['bot']['colors']['name']}\x1f\x02{tweet.user.name}\x02\x1f "
         header += f"\x03{config['bot']['colors']['user']}@{tweet.user.screen_name} "
         header += f"\x03{config['bot']['colors']['date']}{twit_date}\n"
-
         wrapped = wrap_text(tweet_text, config['bot']['wrapLen'])
         if config['bot']['colors']['text']:
             wrapped = '\n'.join([f"\x03{config['bot']['colors']['text']}{line}\x03" for line in wrapped.split('\n')])
-        
         text = header + wrapped
-
         if config['bot']['twitPic']:
-            print("Profile Image URL:", tweet.user.profile_image_url)
             ansi, ansi_height = get_ansi(tweet.user.profile_image_url, config['bot']['ansi'])
-
             num_lines = len(text.split('\n')) + 1
-
             if num_lines < ansi_height:
                 text += '\n' * (ansi_height - num_lines - 1)
-
             text += f"\n{stats}"
-
             message = append_multiline_strings(ansi, text, 1, config)
         else:
             text += f"\n{stats}"
             message = text
-
         send_multiline_message(send_queue, event.target, message)
     except Exception as e:
         print("Error drawing tweet:", e)
-        
+
 if __name__ == "__main__":
     try:
         bot = TwitterIRCBot(config, loop, send_queue)

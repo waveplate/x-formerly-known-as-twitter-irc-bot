@@ -1,12 +1,8 @@
 {
-    "twitter": {
-        "username": "",
-        "email": "",
-        "password": ""
-    },
+    "rapid_api_key": "",
     "irc": {
-        "gecos": "twitbot",
-        "username": "twitbot",
+        "gecos": "xbot",
+        "username": "xbot",
         "host": "irc.efnet.org",
         "port": 6697,
         "use_ssl": true,
