@@ -1,6 +1,7 @@
-### > *note: this is an updated version of this repo that bypasses the API, allowing it to read tweets for free, see `old-twitter-irc-bot` for the old bot written in typescript*
+> [!WARNING]
+> this project uses twikit, as you cannot retrieve tweets using the free tier of the API any longer. **this can get you suspended**, which i found out today
 
-# twitter-irc-bot (0.1.0)
+# twitter-irc-bot (0.1.1)
 this is an irc bot that previews tweets whenever a link to a tweet is posted in a channel
 
 ![twitter-irc-bot](https://i.imgur.com/cI1rIe8.png)
@@ -14,15 +15,27 @@ edit `config.json.example`, the `irc` and `twitter` sections are self-explanator
 `docker-compose up -d`
 
 # running without docker
-### 1) build and install `img2irc` (optional)
+### 1) build or install `img2irc` (optional)
+
+to build from source
+
 `git clone https://github.com/waveplate/img2irc`
 
 `cd img2irc && cargo build --release`
 
 `sudo cp target/release/img2irc /usr/local/bin`
 
-### 2) install `irc` and `twikit`
-`pip install irc twikit`
+or use the statically linked x86_64 musl binary (recommended)
+
+
+      cd /tmp
+      wget https://github.com/waveplate/img2irc/releases/download/v1.1.0/img2irc-1.1.0-linux-x86_64.tar.gz
+      sudo tar -xzf img2irc-1.1.0-linux-x86_64.tar.gz -C /usr/local/bin --strip-components=1 img2irc-1.1.0/img2irc
+      rm -rf img2irc-1.1.0-linux-x86_64.tar.gz
+
+
+### 2) install dependencies
+`pip install irc twikit asyncio requests`
 
 ### 3) start `twitter-irc-bot`
 `python bot.py`
@@ -48,12 +61,18 @@ the default settings are
 
 ```
         "ansi": {
+            "qb": true,
+            "irc"; true,
             "width": 10,
-            "contrast": 30
+            "scale": "2:1",
+            "contrast": 4,
+            "nograyscale": true
         },
 ```
 
-where `width` is the width of the profile picture, and `contrast` increases the contrast by `30` (max: `255`)
+where `width` is the width of the profile picture, and `contrast: 4` increases the contrast by 4%
+
+by default it will use quarterblocks, to use the previous default of halfblocks replace `qb` with `hb` and remove `scale`
 
 for flags which do not take any arguments, simply set the value to `true`, e.g.,
 

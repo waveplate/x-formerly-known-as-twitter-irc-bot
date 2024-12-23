@@ -21,8 +21,12 @@
         "wrapLen": 60,
         "maxTweetLength": 400,
         "ansi": {
+            "qb": true,
+            "irc": true,
             "width": 10,
-            "contrast": 30
+            "scale": "2:1",
+            "contrast": 4,
+            "nograyscale": true
         },
         "colors": {
             "name": "",
