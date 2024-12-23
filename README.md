@@ -1,5 +1,7 @@
 > [!NOTE]
-> this project has been updated to use rapid api (2000 free requests/month, apparently), as X has started enforcing their rules against non-API automation. if you're among the many who are annoyed by this blatantly anti-developer and anti-consumer policy, tweet at @elonmusk and @lindayacc and shame them
+> this project has been updated to use rapid api (2000 free requests/month, apparently), as X has started enforcing their rules against non-API automation.
+> 
+> if you're among the many who are annoyed by this blatantly anti-developer and anti-consumer policy, tweet at @elonmusk and @lindayacc and shame them
 
 # x-formerly-known-as-twitter-irc-bot (0.1.1)
 this is an irc bot that previews tweets whenever a link to a tweet is posted in a channel
